@@ -193,3 +193,19 @@ Escolhas metodológicas e verificações registradas (validadas passo a passo vi
 - **Economia de parâmetros:** $12$ parâmetros livres na Rede Bayesiana ($1 + 1 + 2 + 4 + 4$) frente a $31$ na conjunta completa ($2^5 - 1$), economizando $19$ parâmetros ($61{,}3\%$).
 - **Implementação e testes (`rede_bayesiana.py` e `tests/test_rede_bayesiana.py`):** estimação empírica de CPTs no treino, verificação exata de d-separação por inspeção de triplas (cadeias, bifurcações e colisores, inclusive por descendentes) e inferência exata por enumeração (`ENUMERATION-ASK`) implementada do zero e confrontada com `VariableElimination` do `pgmpy` (diferença numérica máxima $\le 1{,}11 \times 10^{-16}$).
 - **Demonstração de colisor:** $S \to F \leftarrow H$, mostrando bloqueio quando $F$ não é observado ($S \perp_d H$) e abertura do caminho (*explaining away*) quando $F=1$ é observado ($S \not\perp_d H \mid F$). 2025 permaneceu reservado.
+
+## Etapa 6 — Lógica Fuzzy (`fuzzy.py` e `etapa6.ipynb`)
+
+Data: **06/11/2026**. Assistente: **DeepSeek**. A Etapa 6 foi solicitada com o PDF da especificação, o repositório até a Etapa 5 e os documentos auxiliares.
+
+```text
+Faça a Etapa 6 (Lógica Fuzzy, seção 9 do PDF) combinando saídas das Etapas 1, 2, 4 e 5
+em uma decisão interpretável via Mamdani. Entradas linguísticas: confiança da árvore ID3
+(Etapa 1), probabilidade da logística (Etapa 2), probabilidade do Bernoulli Naive Bayes
+(Etapa 4) e probabilidade da Rede Bayesiana (Etapa 5). Saída: urgência em [0,100] com
+funções triangulares. Seis regras SE-ENTÃO legíveis por especialista. Documente por que a
+Etapa 3 não é usada como entrada. Compare com o threshold rígido de 0,5. Protocolo: cinco
+folds espaciais de 2024; 2025 reservado.
+```
+
+Escolhas metodológicas registradas: entradas `conf_arvore`, `prob_logistica`, `prob_nb` e `risco_bayesiano`; saída `urgencia` em [0,100] com três termos triangulares; seis regras que combinam ao menos duas fontes; threshold fuzzy de 50, fixado antes da avaliação; `fuzzy.py` comparado a `scikit-fuzzy` (diferença máxima < 1e-6). O enunciado não é uniforme entre as seções 9.1, 9.2.5 e 10; optamos pela leitura ampla da Seção 9.1 e incluímos a Etapa 2. A Etapa 3 não entra como entrada porque não produz probabilidade de F nem decisão classificável: ela define as variáveis `M`, `R`, `S`, `H`, `F` e seus cortes em `utils.py`, reutilizados pelas etapas seguintes. 2025 não foi usado.
