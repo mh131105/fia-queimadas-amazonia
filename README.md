@@ -6,9 +6,9 @@ O projeto estuda a potência radiativa (FRP) de focos **já detectados** no biom
 
 ## Estado atual
 
-**Dataset auditado e etapas 1 a 5 implementadas e verificadas.** Os notebooks contêm as implementações próprias, comparações com bibliotecas de referência (`scikit-learn` e `pgmpy`), testes sintéticos, resultados e discussão. Os 33 testes unitários automatizados do repositório (`dataset`, `probabilidade`, `etapa4` e `rede_bayesiana`) passam integralmente.
+**Dataset auditado e etapas 1 a 6 implementadas e verificadas.** Os notebooks contêm as implementações próprias, comparações com bibliotecas de referência (`scikit-learn`, `pgmpy` e `scikit-fuzzy`), testes sintéticos, resultados e discussão. Os **57 testes unitários** automatizados do repositório (`dataset`, `probabilidade`, `etapa4`, `rede_bayesiana` e `fuzzy`) passam integralmente.
 
-A etapa 6 (Lógica Fuzzy), a integração final do pipeline, a avaliação externa em 2025, o relatório LaTeX de 6–8 páginas e a apresentação ainda estão pendentes. Os cálculos e a discussão exigidos para o relatório nas etapas 1 a 5 estão preparados nos notebooks; o relatório será escrito ao final.
+A integração final do pipeline, a avaliação externa em 2025, o relatório LaTeX de 6–8 páginas e a apresentação ainda estão pendentes. Os cálculos e a discussão exigidos para o relatório nas etapas 1 a 6 estão preparados nos notebooks; o relatório será escrito ao final.
 
 Recorte metodológico: bioma Amazônia no Brasil, sensor AQUA_M-T, desenvolvimento em 2024 e teste em 2025. A regressão estima FRP em MW. A classificação destaca FRP igual ou superior ao percentil 75 do treino corrente, com limiar congelado para sua validação. Na avaliação final, esse limiar deverá ser aprendido em 2024 e aplicado a 2025. O rótulo é estatístico, sem equivalência automática com gravidade ambiental.
 
@@ -26,6 +26,8 @@ Recorte metodológico: bioma Amazônia no Brasil, sensor AQUA_M-T, desenvolvimen
 | [etapa4.ipynb](etapa4.ipynb) | MLE vs. MAP, Bernoulli Naive Bayes, EM com variáveis latentes ($K=2, 3$), curvas de log-verossimilhança e comparação nos 5 folds espaciais |
 | [rede_bayesiana.py](rede_bayesiana.py) | DAG sobre variáveis binárias, estimação de CPTs, d-separação por análise de caminhos, economia de parâmetros, inferência exata por enumeração (`ENUMERATION-ASK`) e exportação para `pgmpy` |
 | [etapa5.ipynb](etapa5.ipynb) | DAG de 5 nós ($M, R, S, H, F$), CPTs em 2024, inferência por enumeração vs. `VariableElimination` (`pgmpy`), d-separação, demonstração de colisor ($S \to F \leftarrow H$), avaliação nos 5 folds espaciais e saídas para a Etapa 6 |
+| [fuzzy.py](fuzzy.py) | Sistema de Inferência Fuzzy Mamdani do zero: funções triangulares, fuzzificação, inferência min-máx, defuzzificação por centroide e ponte para `scikit-fuzzy` |
+| [etapa6.ipynb](etapa6.ipynb) | Variáveis linguísticas, regras SE-ENTÃO, integração das probabilidades das Etapas 1, 2, 4 e 5 nos 5 folds espaciais, superfície de decisão, ROC e discussão de interpretabilidade |
 
 Os algoritmos próprios ficam nos módulos; os ajustes das bibliotecas ficam nos notebooks. A comparação adicional com `Ridge` e os diagnósticos temporais são escolhas do projeto. A especificação exige explicitamente as comparações com a árvore, a regressão linear e a logística do scikit-learn.
 
@@ -64,6 +66,12 @@ A discretização da árvore perde informação e torna precipitação constante
 - **Inferência por enumeração vs. `pgmpy`:** maior diferença absoluta entre a implementação própria (`ENUMERATION-ASK`) e `VariableElimination` do `pgmpy` foi $\le 1{,}11 \times 10^{-16}$.
 - **d-separação e colisor:** verificadas $M \perp_d F \mid S$ e $R \perp_d H \mid S$; demonstrado o colisor $S \to F \leftarrow H$, no qual observar $F=1$ abre o caminho entre $S$ e $H$ (*explaining away*: $P(S=1\mid F=1, H=0) = 0{,}655837$ contra $P(S=1\mid F=1, H=1) = 0{,}634217$ no fold 0).
 - **Fidelidade da conjunta nos 5 folds espaciais:** Distância de Variação Total (TVD) média na validação de $0{,}0969 \pm 0{,}0577$ na Rede Bayesiana contra $0{,}1768 \pm 0{,}0441$ no Bernoulli Naive Bayes.
+
+**Etapa 6 — Lógica Fuzzy (Mamdani):**
+- **Integração das saídas anteriores:** quatro entradas linguísticas — `conf_arvore` (Etapa 1), `prob_logistica` (Etapa 2), `prob_nb` (Etapa 4) e `risco_bayesiano` (Etapa 5) —, cada uma com três termos triangulares, e seis regras SE-ENTÃO que exigem concordância entre as fontes.
+- **Saída:** `urgencia` em [0, 100] com três termos triangulares, defuzzificada por centroide. Limiar operacional fixado em 50.
+- **Equivalência com `scikit-fuzzy`:** nos pontos em que ao menos uma regra dispara, a diferença absoluta entre a implementação própria e `ControlSystemSimulation` é ≤ 0,5 (diferença de discretização entre as grades de saída). O `scikit-fuzzy` não popula `output` quando todas as forças de ativação são zero; a implementação própria devolve o centro do universo como fallback.
+- **Comparação nos 5 folds espaciais:** o threshold rígido de 0,5 na probabilidade nunca é atingido, de modo que o recall da classificação binária é 0 em todos os folds. A decisão fuzzy recupera positivos nessa faixa e mantém a ordenação (ROC) próxima à das fontes probabilísticas. A tabela dos cinco folds, a ROC e a superfície de decisão estão no notebook.
 
 ## Documentação
 
@@ -138,7 +146,3 @@ Na revisão, passaram as verificações sintéticas de ID3, XOR, categorias iné
 O primeiro comando baixa somente os originais ausentes e confere os hashes dos 24 meses. O segundo reconstrói as tabelas e a auditoria, sem ajustar modelos. Os testes verificam qualidade, separações espaciais/temporais e ausência de vazamento na preparação. Detalhes em [data/README.md](data/README.md).
 
 As instruções de compilação do artigo serão adicionadas quando o relatório existir.
-
-## Histórico e autoria
-
-Autoria: **Matheus Garcia**. O histórico registra contribuições incrementais com `Signed-off-by`.
