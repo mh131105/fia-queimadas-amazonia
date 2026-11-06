@@ -59,13 +59,17 @@ nbclient==0.11.0
 nbconvert==7.17.2
 nbformat==5.11.1
 nest-asyncio2==1.7.4
+networkx==3.7
 notebook-shim==0.2.4
 numpy==2.3.5
+opt-einsum==3.4.0
 packaging==26.3
 pandas==2.2.3
 pandocfilters==1.5.1
 parso==0.8.7
+patsy==1.0.3
 pexpect==4.9.0; sys_platform != "win32"
+pgmpy==1.1.2
 pillow==13.0.0
 platformdirs==4.14.2
 prometheus-client==0.26.0

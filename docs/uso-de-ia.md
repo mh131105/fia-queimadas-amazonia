@@ -177,3 +177,19 @@ Exigência: seção 6, p. 6. "
 ```
 
 Escolhas metodológicas registradas: F = FRP ≥ Q75 do treino; S = dias sem chuva ≥ mediana do treino (mesmo corte da representação `discretizada`); R = precipitação > mediana do treino (0 mm; desigualdade estrita porque a mediana é zero); intervalos por bootstrap de municípios; independência condicional avaliada por φ, informação mútua e qui-quadrado, priorizando a magnitude. 2025 não foi usado.
+
+
+## Etapa 5 — Redes Bayesianas (`rede_bayesiana.py` e `etapa5.ipynb`)
+
+Data: **06/11/2026**. Assistente: Antigravity (Gemini). A Etapa 5 foi solicitada com a especificação em PDF e o repositório contendo as Etapas 1 a 4.
+
+```text
+Oi, eu tenho um trabalho de IA para realizar,, a especificação está dentro do repositório, além das partes 1-4, fiquei responsável pela parte 5, me explique ela na íntegra, confira as partes anteriores, monte um pipeline operacional para fazer a parte 5 e a faça. Tudo isso verificando comigo ao final de cada etapa definida
+```
+
+Escolhas metodológicas e verificações registradas (validadas passo a passo via *human-in-the-loop*):
+- **Variáveis binárias do DAG (5 nós):** mantidas as mesmas definições e cortes aprendidos exclusivamente no treino da Etapa 3: $M$ (`mes >= mediana`), $R$ (`precipitacao > 0` mm, desigualdade estrita), $S$ (`numero_dias_sem_chuva >= mediana`), $H$ (`hora_utc >= mediana`) e $F$ (`frp >= Q75`).
+- **Arestas justificadas (5 arestas):** $M \to R$, $M \to S$, $R \to S$ (capturando a dependência entre precipitação instantânea, sazonalidade e período sem chuva observada na triagem da Etapa 3), $S \to F$ e $H \to F$.
+- **Economia de parâmetros:** $12$ parâmetros livres na Rede Bayesiana ($1 + 1 + 2 + 4 + 4$) frente a $31$ na conjunta completa ($2^5 - 1$), economizando $19$ parâmetros ($61{,}3\%$).
+- **Implementação e testes (`rede_bayesiana.py` e `tests/test_rede_bayesiana.py`):** estimação empírica de CPTs no treino, verificação exata de d-separação por inspeção de triplas (cadeias, bifurcações e colisores, inclusive por descendentes) e inferência exata por enumeração (`ENUMERATION-ASK`) implementada do zero e confrontada com `VariableElimination` do `pgmpy` (diferença numérica máxima $\le 1{,}11 \times 10^{-16}$).
+- **Demonstração de colisor:** $S \to F \leftarrow H$, mostrando bloqueio quando $F$ não é observado ($S \perp_d H$) e abertura do caminho (*explaining away*) quando $F=1$ é observado ($S \not\perp_d H \mid F$). 2025 permaneceu reservado.

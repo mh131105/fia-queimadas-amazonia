@@ -6,9 +6,9 @@ O projeto estuda a potência radiativa (FRP) de focos **já detectados** no biom
 
 ## Estado atual
 
-**Dataset auditado e etapas 1 e 2 implementadas e verificadas.** Os notebooks contêm as implementações próprias, comparações com scikit-learn, testes sintéticos, resultados e discussão. A revisão de 31/10/2026 reexecutou ambos com kernels novos e confirmou as saídas numéricas salvas. Os 11 testes do dataset também passaram.
+**Dataset auditado e etapas 1 a 5 implementadas e verificadas.** Os notebooks contêm as implementações próprias, comparações com bibliotecas de referência (`scikit-learn` e `pgmpy`), testes sintéticos, resultados e discussão. Os 33 testes unitários automatizados do repositório (`dataset`, `probabilidade`, `etapa4` e `rede_bayesiana`) passam integralmente.
 
-As etapas 3–6, a integração do pipeline, a avaliação final em 2025, o relatório LaTeX de 6–8 páginas e a apresentação ainda estão pendentes. Os cálculos e a discussão exigidos para o relatório nas etapas iniciais estão preparados nos notebooks; o relatório será escrito ao final.
+A etapa 6 (Lógica Fuzzy), a integração final do pipeline, a avaliação externa em 2025, o relatório LaTeX de 6–8 páginas e a apresentação ainda estão pendentes. Os cálculos e a discussão exigidos para o relatório nas etapas 1 a 5 estão preparados nos notebooks; o relatório será escrito ao final.
 
 Recorte metodológico: bioma Amazônia no Brasil, sensor AQUA_M-T, desenvolvimento em 2024 e teste em 2025. A regressão estima FRP em MW. A classificação destaca FRP igual ou superior ao percentil 75 do treino corrente, com limiar congelado para sua validação. Na avaliação final, esse limiar deverá ser aprendido em 2024 e aplicado a 2025. O rótulo é estatístico, sem equivalência automática com gravidade ambiental.
 
@@ -22,6 +22,10 @@ Recorte metodológico: bioma Amazônia no Brasil, sensor AQUA_M-T, desenvolvimen
 | [etapa2.ipynb](etapa2.ipynb) | Comparações com `LinearRegression`, `Ridge` e `LogisticRegression`, convergência e curva de coeficientes × lambda |
 | [probabilidade.py](probabilidade.py) | Conjunta de variáveis binárias, marginais, condicionais, regra da cadeia, Bayes, independência condicional e bootstrap por município, com NumPy |
 | [etapa3.ipynb](etapa3.ipynb) | Conjunta FRP elevada × período longo sem chuva, Bayes causal/diagnóstico, regra da cadeia com 3 variáveis, independência condicional dada a classe, estabilidade nos 5 folds e sensibilidade |
+| [aprendizado_probabilistico.py](aprendizado_probabilistico.py) e [em.py](em.py) | Estimadores MLE e MAP (Beta-Bernoulli), Bernoulli Naive Bayes do zero e Mistura Gaussiana Diagonal via EM por classe |
+| [etapa4.ipynb](etapa4.ipynb) | MLE vs. MAP, Bernoulli Naive Bayes, EM com variáveis latentes ($K=2, 3$), curvas de log-verossimilhança e comparação nos 5 folds espaciais |
+| [rede_bayesiana.py](rede_bayesiana.py) | DAG sobre variáveis binárias, estimação de CPTs, d-separação por análise de caminhos, economia de parâmetros, inferência exata por enumeração (`ENUMERATION-ASK`) e exportação para `pgmpy` |
+| [etapa5.ipynb](etapa5.ipynb) | DAG de 5 nós ($M, R, S, H, F$), CPTs em 2024, inferência por enumeração vs. `VariableElimination` (`pgmpy`), d-separação, demonstração de colisor ($S \to F \leftarrow H$), avaliação nos 5 folds espaciais e saídas para a Etapa 6 |
 
 Os algoritmos próprios ficam nos módulos; os ajustes das bibliotecas ficam nos notebooks. A comparação adicional com `Ridge` e os diagnósticos temporais são escolhas do projeto. A especificação exige explicitamente as comparações com a árvore, a regressão linear e a logística do scikit-learn.
 
@@ -53,6 +57,13 @@ Precisão, recall e F1 se referem à classe 1. A acurácia próxima de 75% preci
 Os **cinco diagnósticos temporais** usam treino crescente e validação no bimestre seguinte, dentro de 2024, e ficam separados da avaliação espacial. Neles, a multivariada teve R² médio −0,036788; a logística teve acurácia média 0,734486, frente a 0,738189 da maioria. O lambda do Ridge foi selecionado usando todos os folds espaciais de 2024, que incluem períodos posteriores aos primeiros treinos temporais: esse diagnóstico do Ridge não constitui uma avaliação prospectiva independente da escolha do parâmetro.
 
 A discretização da árvore perde informação e torna precipitação constante no fold espacial 0. Dependência entre detecções, fronteiras municipais, ausências e características do sensor também limitam a generalização. As faixas de desempenho ilustradas no PDF não foram usadas como metas de ajuste. **2025 não foi usado para ajustar, selecionar ou avaliar modelos nestes notebooks.**
+
+**Etapa 5 — Rede Bayesiana (`M, R, S, H, F`):**
+- **Estrutura do DAG:** $M \to R$, $M \to S$, $R \to S$, $S \to F$ e $H \to F$, induzindo $P(M,R,S,H,F) = P(M)\,P(H)\,P(R\mid M)\,P(S\mid M,R)\,P(F\mid S,H)$.
+- **Economia de parâmetros:** reduz de **31 parâmetros livres** (conjunta completa de 5 variáveis binárias) para **12 parâmetros livres** (economia de **19 parâmetros**, ou $61{,}3\%$).
+- **Inferência por enumeração vs. `pgmpy`:** maior diferença absoluta entre a implementação própria (`ENUMERATION-ASK`) e `VariableElimination` do `pgmpy` foi $\le 1{,}11 \times 10^{-16}$.
+- **d-separação e colisor:** verificadas $M \perp_d F \mid S$ e $R \perp_d H \mid S$; demonstrado o colisor $S \to F \leftarrow H$, no qual observar $F=1$ abre o caminho entre $S$ e $H$ (*explaining away*: $P(S=1\mid F=1, H=0) = 0{,}655837$ contra $P(S=1\mid F=1, H=1) = 0{,}634217$ no fold 0).
+- **Fidelidade da conjunta nos 5 folds espaciais:** Distância de Variação Total (TVD) média na validação de $0{,}0969 \pm 0{,}0577$ na Rede Bayesiana contra $0{,}1768 \pm 0{,}0441$ no Bernoulli Naive Bayes.
 
 ## Documentação
 
