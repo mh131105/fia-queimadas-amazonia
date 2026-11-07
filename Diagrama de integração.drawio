@@ -1,0 +1,146 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="Pl5WNrkzLv5jvTlyGFJU">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-7" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="Y3X-MKq0s8ghP9uIoXxS-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;b&gt;Dados oficiais:&lt;br&gt;&lt;/b&gt;INPE Programa Queimadas -&amp;nbsp; AQUA_M-T, bioma Amazônia&lt;br&gt;2024: 140 346 detecções (desenvolvimento)" vertex="1">
+          <mxGeometry height="80" width="330" x="260" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-13" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="Y3X-MKq0s8ghP9uIoXxS-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;b&gt;Etapa 1: Árvore de decisão&amp;nbsp;&lt;/b&gt;&lt;div&gt;(ID3)&lt;br/&gt;acc. 0,749 · recall 1,3%&amp;nbsp;&lt;/div&gt;&lt;div&gt;→ conf_arvore&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="260" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-14" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="Y3X-MKq0s8ghP9uIoXxS-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;b&gt;Etapa 2:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;Regressão + Logística&amp;nbsp;&lt;/span&gt;&lt;/b&gt;&lt;div&gt;R&lt;sup&gt;2&lt;/sup&gt; = 0,021 (FRP)&amp;nbsp;&lt;/div&gt;&lt;div&gt;acc. 0,756; recall 4,8%&lt;br&gt;→ prob_logistica&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="260" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="JBGGwdfxGolTYXKYiqa0-2" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;defaultLabelBackgroundColor=page;" target="Y3X-MKq0s8ghP9uIoXxS-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;b&gt;Etapa 3: Probabilidade&amp;nbsp;&lt;/b&gt;&lt;div&gt;Bayes, regra da cadeia, independência&amp;nbsp;&lt;/div&gt;&lt;div&gt;P(F=1|S=1) = 0,308&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="260" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-22" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="Y3X-MKq0s8ghP9uIoXxS-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;b&gt;Etapa 4: Naive Bayes + EM&amp;nbsp;&lt;/b&gt;&lt;div&gt;Bernoulli NB: AUC 0,598 → prob_nb&amp;nbsp;&lt;/div&gt;&lt;div&gt;EM (K=2,3) avaliado na Etapa 4&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="260" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-23" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="Y3X-MKq0s8ghP9uIoXxS-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;b&gt;Etapa 5: Rede Bayesiana&amp;nbsp;&lt;/b&gt;&lt;div&gt;1&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;2 parâmetros (vs. 31) · AUC 0,581&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;→ risco_bayesiano&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="260" y="593" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-24" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="Y3X-MKq0s8ghP9uIoXxS-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;b&gt;Etapa 6: Sistema Fuzzy (Mamdani)&amp;nbsp;&lt;/b&gt;&lt;div&gt;4 entradas × 3 termos · 6 regras SE-ENTÃO&lt;/div&gt;&lt;div&gt;&amp;nbsp;saída: urgência ∈ [0, 100]&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="260" y="705" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="&lt;b&gt;Decisão final&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;interpretável&lt;/span&gt;&lt;/b&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;urgência ≥ 50: recall 0,81 · precisão 0,29&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;limiar rígido 0,5: recall 0&amp;nbsp;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="330" x="260" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-25" parent="1" style="text;whiteSpace=wrap;html=1;" value="fluxo do pipeline&lt;br&gt;saídas reutilizadas nas etapas seguintes (linhas tracejadas)" vertex="1">
+          <mxGeometry height="50" width="350" x="260" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-26" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;defaultLabelBackgroundColor=page;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="Y3X-MKq0s8ghP9uIoXxS-25" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="230" y="962.5" as="sourcePoint" />
+            <mxPoint x="250" y="1060" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-29" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;rounded=0;defaultLabelBackgroundColor=page;entryX=0;entryY=0.6;entryDx=0;entryDy=0;entryPerimeter=0;orthogonal=1;" target="Y3X-MKq0s8ghP9uIoXxS-25" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="240" y="980" as="sourcePoint" />
+            <mxPoint x="420" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-30" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-18" style="endArrow=none;dashed=1;html=1;rounded=0;defaultLabelBackgroundColor=page;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="Y3X-MKq0s8ghP9uIoXxS-2" value="">
+          <mxGeometry height="50" relative="1" width="50" x="0.6645" as="geometry">
+            <Array as="points">
+              <mxPoint x="160" y="745" />
+              <mxPoint x="160" y="200" />
+              <mxPoint x="160" y="170" />
+            </Array>
+            <mxPoint x="160" y="860" as="sourcePoint" />
+            <mxPoint x="230" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-31" connectable="0" parent="Y3X-MKq0s8ghP9uIoXxS-30" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="conf_arvore&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.4761" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-32" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-17" style="endArrow=none;dashed=1;html=1;rounded=0;defaultLabelBackgroundColor=page;entryX=0;entryY=0.75;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="Y3X-MKq0s8ghP9uIoXxS-2" value="">
+          <mxGeometry height="50" relative="1" width="50" x="-0.3137" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="633" />
+              <mxPoint x="200" y="210" />
+            </Array>
+            <mxPoint x="190" y="590" as="sourcePoint" />
+            <mxPoint x="240" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-33" connectable="0" parent="Y3X-MKq0s8ghP9uIoXxS-32" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="alvo F / Atributos" vertex="1">
+          <mxGeometry relative="1" x="-0.7041" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-34" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-16" style="endArrow=none;dashed=1;html=1;rounded=0;defaultLabelBackgroundColor=page;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="Y3X-MKq0s8ghP9uIoXxS-17" value="">
+          <mxGeometry height="50" relative="1" width="50" x="-0.0941" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="540" />
+              <mxPoint x="640" y="633" />
+            </Array>
+            <mxPoint x="630" y="660" as="sourcePoint" />
+            <mxPoint x="680" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-38" connectable="0" parent="Y3X-MKq0s8ghP9uIoXxS-34" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="NB vs. rede (TVD)" vertex="1">
+          <mxGeometry relative="1" x="-0.1891" y="-3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-35" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-11" style="endArrow=none;dashed=1;html=1;rounded=0;defaultLabelBackgroundColor=page;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="Y3X-MKq0s8ghP9uIoXxS-18" value="">
+          <mxGeometry height="50" relative="1" width="50" x="-0.8015" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="300" />
+              <mxPoint x="700" y="765" />
+            </Array>
+            <mxPoint x="660" y="350" as="sourcePoint" />
+            <mxPoint x="710" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-37" connectable="0" parent="Y3X-MKq0s8ghP9uIoXxS-35" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="prob_logistica" vertex="1">
+          <mxGeometry relative="1" x="-0.3956" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-36" edge="1" parent="1" source="Y3X-MKq0s8ghP9uIoXxS-16" style="endArrow=none;dashed=1;html=1;rounded=0;defaultLabelBackgroundColor=page;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="Y3X-MKq0s8ghP9uIoXxS-18" value="">
+          <mxGeometry height="50" relative="1" width="50" x="-0.6208" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="500" />
+              <mxPoint x="670" y="725" />
+            </Array>
+            <mxPoint x="610" y="700" as="sourcePoint" />
+            <mxPoint x="660" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Y3X-MKq0s8ghP9uIoXxS-39" connectable="0" parent="Y3X-MKq0s8ghP9uIoXxS-36" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="prob_nb" vertex="1">
+          <mxGeometry relative="1" x="0.3948" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
